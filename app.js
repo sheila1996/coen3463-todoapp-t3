@@ -17,6 +17,7 @@ const router = express.Router();
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var notes = require('./routes/notes');
         
 var MongoURI = 'mongodb://shira1996:shira1996@ds119750.mlab.com:19750/module6-8';
 
@@ -47,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var User = require('./models/users');
-//var Todo = require('./models/todolist');
+var Note = require('./models/notes');
 
 passport.use(User.createStrategy());
 
@@ -70,7 +71,7 @@ app.use(router);
 
 app.use('/', index);
 app.use('/auth', auth);
-//app.use('/notes', notes);
+app.use('/notes', notes);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

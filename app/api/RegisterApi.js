@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const RegisterApi = {
 
-	    onLogin:(data)=>{
-        return axios.post('/auth/login',data)
+    onLogin:(data)=>{
+        return axios.post('/auth/login/',data)
         .then((res)=>{
             console.log(res);
             return res;
@@ -12,6 +12,16 @@ const RegisterApi = {
             return err; 
 
         });
+    },
+
+    onGetUser: (data)=>{
+        return axios.get('/auth/getUser')
+            .then((res)=>{
+                console.log(res);
+                return res;
+            }).catch((err)=>{
+                console.log(err);
+            });
     },
 
 	onRegister:(data)=>{

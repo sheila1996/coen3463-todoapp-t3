@@ -3,6 +3,8 @@ import './index.css';
 import RegisterApi from '../api/RegisterApi';
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
+var PropTypes = React.PropTypes;
+
 
 
 class Register extends Component {
@@ -34,7 +36,7 @@ class Register extends Component {
                 user: data.response._id,
                 username: data.response.username,
               });
-              this.context.router.push('/notes');
+              this.context.router.push('/list');
               console.log(data);
               return;
             }else{

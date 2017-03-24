@@ -7,8 +7,7 @@ var notesSchema = new Schema({
 		required: true
 	},
 	user: {
-		type: Schema.Types.ObjectId, ref:'users',
-		required: true
+		type: String
 	},
 	createDate: {type: Date, default: Date.now},
 	isCompleted: {type: Boolean, default: false}

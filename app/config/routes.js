@@ -4,6 +4,7 @@ import App from './../components/App';
 import Register from './../components/register.js';
 import login from './../components/login.js';
 import notes from './../components/note.js';
+import List from './../components/List.js';
 
 var routes = (
 <Router history = {browserHistory}>
@@ -11,6 +12,7 @@ var routes = (
 		<IndexRoute component={Register}/>
 		<Route path='login' component={login} />
 		<Route path='notes' component={notes} />
+		<Route path='list' component={List} />
 	</Route>
 </Router>
 

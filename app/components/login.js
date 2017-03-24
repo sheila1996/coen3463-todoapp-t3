@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './index.css';
 import RegisterApi from '../api/RegisterApi';
+import List from './List.js';
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
+var PropTypes = React.PropTypes;
+
 
 class login extends Component {
   constructor(props) {
@@ -31,7 +34,7 @@ class login extends Component {
                 user: res.data.response._id,
                 username: data.response.username,
               });
-            this.context.router.push('/notes');
+            this.context.router.push('/list');
               // window.location = '/todo';
               console.log(data);
               return;
@@ -72,6 +75,7 @@ class login extends Component {
         <Link to='/'>
         <button>Register</button>
         </Link>
+
     </div>
     </div>        
         

@@ -8,13 +8,15 @@ class notes extends Component {
     this.state = {
       notes: [
         {
-          text: "Hello",
-          completed: false
+          name: "Hello",
+          isCompleted: false,
+          user: "",
+          createdate: Date.now
         }
 
       ],
-      user: "",
-      newText: "",
+      newuser: "",
+      newname: "",
       completed: false,
       index: 0,
     };
@@ -24,15 +26,16 @@ class notes extends Component {
     this.addNote = this.addNote.bind(this);
   }
 
+  
   addingNote(event) {
     this.setState({ newText: event.target.value});
   }
 
   addNote() {
     if(this.state.newText) {
-      let newText = { text: this.state.newText, completed:false };
+      let newText = { text: this.state.newname, completed:false };
       this.setState({
-        notes:[...this.state.notes, newText]//
+        notes:[...this.state.notes, newname]//
       });
     }
   }
@@ -59,7 +62,6 @@ class notes extends Component {
 
 
   render() {
-    console.log("hello its me");
     let loopNotes = [],
         typeTask,
         newTask,

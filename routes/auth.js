@@ -40,6 +40,14 @@ router.route('/register')
     })
   })
 
+router.get('/getUser', (req, res)=>{
+  const user = req.user;
+  res.json({
+    response: user
+  });
+});
+
+
   router.post('/login', function(req, res, next) {
   User.authenticate()(req.body.username, req.body.password,(err, user, options)=>{
     if (err) return res.status(500).json({
