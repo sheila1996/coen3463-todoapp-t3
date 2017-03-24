@@ -21,7 +21,7 @@ class List extends Component {
     }
 
     this.onAdd = this.onAdd.bind(this);
-  
+    this.onLogout = this.onLogout.bind(this);
   }
 
 
@@ -77,7 +77,17 @@ onAdd(e){
             });
         }       
     }
-
+    onLogout(e){
+        e.preventDefault();
+        RegisterApi.onLogout().then((res)=>{
+            console.log(res);
+            console.log("Logout Success!")
+            this.context.router.push('/login');  
+            // window.location = '/';
+        }).catch((err)=>{
+          console.log(err);
+        });  
+    }
 
   render() {
     
@@ -108,6 +118,7 @@ onAdd(e){
         <button className="button is-primary is-outlined is-fullwidth" type="submit">Add Note</button>
     </div>
     </form>
+    <button onClick={this.onLogout}>Log-out</button>
   </nav>
       
         

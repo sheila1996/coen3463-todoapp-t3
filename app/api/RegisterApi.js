@@ -31,7 +31,20 @@ const RegisterApi = {
 		}).catch((err)=>{
 			return err;
 		});
-	}
+	},
+    
+    onLogout:(data)=>{
+        return axios.get('/auth/logout',data)
+        .then((res)=>{
+            console.log(res);
+            return res;
+        }).catch((err)=>{
+            console.log(err);
+            return err; 
+
+        });
+
+    }
 
 }
 

@@ -80,5 +80,13 @@ router.get('/getUser', (req, res)=>{
   });
 });
 
+router.all('/logout', function(req, res, next) {
+  req.logout();
+  res.send({
+    redirect:'/login'
+  })
+});
+
+
 
 module.exports = router;
