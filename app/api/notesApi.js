@@ -22,6 +22,17 @@ var notesApi = {
             console.log(err);
             return err;
         })
+    },
+
+    onDeleteOne:(coffee)=>{
+        return axios.post('notes/deleteOne', coffee)
+        .then((res)=>{
+            console.log(res);
+            return res;
+        }).catch((err)=>{
+            console.log(err);
+            return err;
+        })
     }
 }
 

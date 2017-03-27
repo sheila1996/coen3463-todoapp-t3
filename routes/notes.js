@@ -59,6 +59,30 @@ router.post('/getAll', function(req,res, next){
   })
 });
 
+router.post('/deleteOne', function(req, res, next){
+  Note.findByIdAndRemove(req.body.noteid, function (err, res){
+    if(!err){
+    console.log("deleted");
+    }
+    })
+  console.log(req.body.user)
+    Note.find({user: req.body.user}, function (err, drink){
+    if(err){
+      return res.json({
+        success: false,
+        response: err
+      });
+     }else{
+      return res.json({
+        success: true,
+        response: drink
+      })
+     }
+
+      })
+  
+});
+
 
 
 module.exports = router;

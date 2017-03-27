@@ -14,6 +14,7 @@ class List extends Component {
     this.state = {
       loopnotes: [],
       loopdisplay: [], 
+      todelete: "",
       user: "",
       name: "",
       username: "",
@@ -24,6 +25,7 @@ class List extends Component {
 
     this.onAdd = this.onAdd.bind(this);
     this.onLogout = this.onLogout.bind(this);
+    this.onDeleteOne = this.onDeleteOne.bind(this);
   }
 
 
@@ -36,7 +38,6 @@ onAdd(e){
     }
     console.log(this.state.user);
    notesApi.onAdd(task).then((res)=>{
-           console.log(this.state.user); //access data here //check the console
            if(res.data.success){
             console.log('successss');       
               this.setState({  
@@ -50,7 +51,6 @@ onAdd(e){
                 error: res.data.response.message,
                 title: res.data.title,
               });
-              console.log(task);
               console.log("Register Failed!");
             } 
         }).catch((err)=>{
@@ -84,7 +84,6 @@ onAdd(e){
                     this.setState({
                       loopnotes: res.data.response
                     })
-                    console.log(this.state.loopnotes[1]);
                   })
 
                 
@@ -105,6 +104,24 @@ onAdd(e){
         });  
     }
 
+  onDeleteOne(index, e){
+    e.preventDefault();
+      this.setState({
+        todelete: index
+      })
+    console.log(this.state.loopnotes[index].user);
+    var coffee = {
+      noteid: this.state.loopnotes[index]._id,
+      user: this.state.user,
+    }
+    notesApi.onDeleteOne(coffee).then((res)=>{
+      console.log(res);
+      this.setState({
+      loopnotes: res.data.response
+      })
+    })
+  }
+   
 
 
   render() {
@@ -114,6 +131,7 @@ onAdd(e){
           <label className="panel-block">
           <input type="checkbox" />
             {this.state.loopnotes[index].name}
+          <button className="delete is-small is-pulled-right" onClick={this.onDeleteOne.bind(this, index)}></button>
           </label>
       );
     }
@@ -135,10 +153,7 @@ onAdd(e){
       <p className="panel-tabs">
         <a className="is-active">All</a>
       </p>
-          <label className="panel-block">
-          <input type="checkbox" />
-            Remember me
-          </label>
+
           <div>
           {displayComponents}
           </div>
