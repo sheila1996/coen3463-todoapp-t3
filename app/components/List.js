@@ -41,6 +41,7 @@ onAdd(e){
             console.log('successss');       
               this.setState({  
                 name: res.data.response.name,
+                loopnotes:[...this.state.loopnotes, res.data.response]
               });
               console.log(res.data);
               return;
