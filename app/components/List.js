@@ -12,6 +12,8 @@ class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loopnotes: [],
+      loopdisplay: [], 
       user: "",
       name: "",
       username: "",
@@ -57,7 +59,7 @@ onAdd(e){
 
    componentDidMount(){
         let lastUserState = this.state.user;
-        let lastItemState = this.state.items;
+
         if(lastUserState!==''){
             return; 
         }else{
@@ -74,7 +76,20 @@ onAdd(e){
                     this.context.router.push('/login');
                 
                 }
+              var mute={
+                        user: this.state.user
+                      }
+                  notesApi.onGetNote(mute).then((res)=>{
+                    this.setState({
+                      loopnotes: res.data.response
+                    })
+                    console.log(this.state.loopnotes[1]);
+                  })
+
+                
+    
             });
+
         }       
     }
     onLogout(e){
@@ -89,8 +104,18 @@ onAdd(e){
         });  
     }
 
+
+
   render() {
-    
+    let displayComponents = [];
+    for(var index = 0; index < this.state.loopnotes.length; index++) {
+      displayComponents.push(
+          <label className="panel-block">
+          <input type="checkbox" />
+            {this.state.loopnotes[index].name}
+          </label>
+      );
+    }
 
     return (
   <nav className="panel">
@@ -113,7 +138,9 @@ onAdd(e){
           <input type="checkbox" />
             Remember me
           </label>
-          <br/>
+          <div>
+          {displayComponents}
+          </div>
     <div className="panel-block">
         <button className="button is-primary is-outlined is-fullwidth" type="submit">Add Note</button>
     </div>

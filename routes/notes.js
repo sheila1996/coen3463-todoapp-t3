@@ -8,7 +8,7 @@ var router = express.Router();
 var passport = require('passport');
 var  LocalStrategy = require('passport-local').Strategy;
 
-var userId =''; 
+var userId ='58cffa2ebc0d5f11f8fd272f'; 
 
 router.post('/addNew', function(req, res, next){
   const note = new Note({
@@ -40,6 +40,24 @@ router.post('/addNew', function(req, res, next){
   });
 });
 
+router.post('/getAll', function(req,res, next){
+  console.log({user: req.body.user});
+  Note.find({user: req.body.user}, function (err, list){
+    
+    if(err){
+      return res.json({
+        success: false,
+        response: "Error"
+      });
+    }
+    if(!err){
+      return res.json({
+        success: true,
+        response: list
+      })
+    }
+  })
+});
 
 
 
