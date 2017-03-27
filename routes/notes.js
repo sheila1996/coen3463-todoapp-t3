@@ -83,6 +83,35 @@ router.post('/deleteOne', function(req, res, next){
   
 });
 
+router.post('/updateComplete', function(req, res, next){
+  console.log(req.body.noteid);
+  if(req.body.completeid){  
+    Note.update({_id: req.body.noteid}, {isCompleted: false}, function (err, res){
+    if(err){
+      console.log(err);
+    }else{
+      console.log("updated");
+    }
+  })
+}else{
+  Note.update({_id: req.body.noteid}, {isCompleted: true}, function (err, res){
+    if(err){
+      console.log(err);
+    }else{
+      console.log("updated");
+    }
+  })
+}
+  Note.find({user: req.body.user}, function(err, night){
+    if(!err){
+      return res.json({
+        success: true,
+        response: night
+      })
+    }
+  })
+});
+
 
 
 module.exports = router;

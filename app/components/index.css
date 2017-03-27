@@ -18,6 +18,11 @@ body {
     margin-left: 10px;
 }
 
+.panel-block.completednote{
+  text-decoration: line-through;
+  color: grey;
+}
+
 /*! minireset.css v0.0.2 | MIT License | github.com/jgthms/minireset.css */
 html,
 body,

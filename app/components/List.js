@@ -26,6 +26,7 @@ class List extends Component {
     this.onAdd = this.onAdd.bind(this);
     this.onLogout = this.onLogout.bind(this);
     this.onDeleteOne = this.onDeleteOne.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
   }
 
 
@@ -121,20 +122,47 @@ onAdd(e){
       })
     })
   }
+
+  onUpdate(index, e){
+    e.preventDefault();
+    var white = {
+      noteid: this.state.loopnotes[index]._id,
+      user: this.state.user,
+      completeid: this.state.loopnotes[index].isCompleted,
+    }
+    notesApi.onUpdateComplete(white).then((res)=>{
+      console.log(res);
+      this.setState({
+        loopnotes: res.data.response
+      })
+    })
+  }
    
 
 
   render() {
+
     let displayComponents = [];
     for(var index = 0; index < this.state.loopnotes.length; index++) {
-      displayComponents.push(
-          <label className="panel-block">
-          <input type="checkbox" />
+      
+         if(this.state.loopnotes[index].isCompleted == true){
+          displayComponents.push(
+          <label className="panel-block completednote">
+          <input type="checkbox" onClick={this.onUpdate.bind(this, index)}  checked={this.state.loopnotes[index].isCompleted}/>
             {this.state.loopnotes[index].name}
           <button className="delete is-small is-pulled-right" onClick={this.onDeleteOne.bind(this, index)}></button>
           </label>
+          );
+    }else{
+        displayComponents.push(
+          <label className="panel-block">
+          <input type="checkbox" onClick={this.onUpdate.bind(this, index)} checked={this.state.loopnotes[index].isCompleted}/>
+            {this.state.loopnotes[index].name}
+          <button className="delete is-small is-pulled-right" onClick={this.onDeleteOne.bind(this, index)} ></button>
+          </label>
       );
     }
+  }
 
     return (
   <nav className="panel">
