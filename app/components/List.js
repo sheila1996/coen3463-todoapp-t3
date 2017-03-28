@@ -27,6 +27,7 @@ class List extends Component {
     this.onLogout = this.onLogout.bind(this);
     this.onDeleteOne = this.onDeleteOne.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
+    this.onDelCheck = this.onDelCheck.bind(this);
   }
 
 
@@ -138,6 +139,19 @@ onAdd(e){
     })
   }
    
+ onDelCheck(e){
+    e.preventDefault();   
+    console.log(this.state.user);
+    var black = {
+      user: this.state.user,
+    } 
+  notesApi.onDeleteCheck(black).then((res)=>{
+    console.log(res);
+      this.setState({
+        loopnotes: res.data.response
+      })
+  })
+}
 
 
   render() {
@@ -167,6 +181,12 @@ onAdd(e){
     return (
   <nav className="panel">
       <p className="panel-heading">
+        Hi {this.state.username}!
+      <br/>
+        {this.state.email}
+      </p>
+
+      <p className="panel-heading">
         To Do List
       </p>
       <form onSubmit={this.onAdd}>
@@ -188,8 +208,17 @@ onAdd(e){
     <div className="panel-block">
         <button className="button is-primary is-outlined is-fullwidth" type="submit">Add Note</button>
     </div>
+    <div className="panel-block">
+        <button className="button is-primary is-outlined is-fullwidth" onClick={this.onDelCheck}>Remove All Checked</button>
+    </div>
+  
     </form>
+    <div className="panel-block">
+        <button className="button is-primary is-outlined is-fullwidth">Delete All</button>
+    </div>
+
     <button onClick={this.onLogout}>Log-out</button>
+    
   </nav>
       
         
