@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import './index.css';
-import login from './login.js';
-import RegisterApi from '../api/RegisterApi';
-import notesApi from '../api/notesApi';
-var ReactRouter = require('react-router');
-var Link = ReactRouter.Link;
-var PropTypes = React.PropTypes;
+import React, { Component } from 'react'; import './index.css'; import login
+from './login.js'; import RegisterApi from '../api/RegisterApi'; import
+notesApi from '../api/notesApi'; var ReactRouter = require('react-router');
+var Link = ReactRouter.Link; var PropTypes = React.PropTypes;
 
 
 class List extends Component {
@@ -21,6 +17,7 @@ class List extends Component {
       username: "",
       newname: "",
       error: "",
+      active: "all",
       title: ""
     }
 
@@ -30,7 +27,9 @@ class List extends Component {
     this.onUpdate = this.onUpdate.bind(this);
     this.onDelCheck = this.onDelCheck.bind(this);
     this.onDelAll = this.onDelAll.bind(this);
-
+    this.onDisDone = this.onDisDone.bind(this);
+    this.onDisAll = this.onDisAll.bind(this);
+    this.onDisOpen = this.onDisOpen.bind(this);
   }
 
 
@@ -171,14 +170,44 @@ onAdd(e){
   })
 }
 
+onDisAll(e){
+    e.preventDefault();  
+    this.setState({
+        active: "all"
+      })
+}
+onDisOpen(e){
+      e.preventDefault();  
+      this.setState({
+        active: "open"
+      })
+}
+onDisDone(e){
+      e.preventDefault();  
+      this.setState({
+        active: "done"
+      })
+    console.log(this.state.active)
+}
+
 
   render() {
-
+    const active = this.state.active;
+    let displayOpen = [];
+    let displayFinal = [];
+    let displayDone = [];
     let displayComponents = [];
     let displayCount = [];
     for(var index = 0; index < this.state.loopnotes.length; index++) {
       
          if(this.state.loopnotes[index].isCompleted == true){
+          displayDone.push(
+          <label className="panel-block completednote">
+          <input type="checkbox" onClick={this.onUpdate.bind(this, index)}  checked={this.state.loopnotes[index].isCompleted}/>
+            {this.state.loopnotes[index].name}
+          <button className="delete is-small is-pulled-right" onClick={this.onDeleteOne.bind(this, index)}></button>
+          </label>
+          );
           displayCount.push({index})
           displayComponents.push(
           <label className="panel-block completednote">
@@ -195,6 +224,22 @@ onAdd(e){
           <button className="delete is-small is-pulled-right" onClick={this.onDeleteOne.bind(this, index)} ></button>
           </label>
       );
+        displayOpen.push(
+          <label className="panel-block">
+          <input type="checkbox" onClick={this.onUpdate.bind(this, index)} checked={this.state.loopnotes[index].isCompleted}/>
+            {this.state.loopnotes[index].name}
+          <button className="delete is-small is-pulled-right" onClick={this.onDeleteOne.bind(this, index)} ></button>
+          </label>
+      );
+    }
+    if (this.state.active == "open") {
+      displayFinal = displayOpen
+    }
+    if (this.state.active == "done") {
+      displayFinal = displayDone
+    }
+    if (this.state.active == "all") {
+      displayFinal = displayComponents
     }
   }
 
@@ -220,12 +265,13 @@ onAdd(e){
       </p>
     </div>
       <p className="panel-tabs">
-        <a className="is-active">All</a>
+        <button className="is-active" onClick={this.onDisAll}>All</button>
+        <button onClick={this.onDisOpen}>Open</button>
+        <button onClick={this.onDisDone}>Done</button>
       </p>
-
-          <div>
-          {displayComponents}
-          </div>
+      <div>
+           {displayFinal}
+      </div>
     <div className="panel-block">
         <button className="button is-primary is-outlined is-fullwidth" type="submit">Add Note</button>
     </div>
