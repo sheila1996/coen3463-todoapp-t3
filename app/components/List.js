@@ -28,6 +28,7 @@ class List extends Component {
     this.onDeleteOne = this.onDeleteOne.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
     this.onDelCheck = this.onDelCheck.bind(this);
+    this.onDelAll = this.onDelAll.bind(this);
   }
 
 
@@ -153,6 +154,20 @@ onAdd(e){
   })
 }
 
+ onDelAll(e){
+    e.preventDefault();   
+    console.log(this.state.user);
+    var grey = {
+      user: this.state.user,
+    } 
+  notesApi.onDeleteAll(grey).then((res)=>{
+    console.log(res);
+      this.setState({
+        loopnotes: res.data.response
+      })
+  })
+}
+
 
   render() {
 
@@ -208,16 +223,16 @@ onAdd(e){
     <div className="panel-block">
         <button className="button is-primary is-outlined is-fullwidth" type="submit">Add Note</button>
     </div>
+    
+    </form>
     <div className="panel-block">
         <button className="button is-primary is-outlined is-fullwidth" onClick={this.onDelCheck}>Remove All Checked</button>
     </div>
-  
-    </form>
     <div className="panel-block">
-        <button className="button is-primary is-outlined is-fullwidth">Delete All</button>
+        <button className="button is-primary is-outlined is-fullwidth" onClick={this.onDelAll}>Delete All</button>
     </div>
 
-    <button onClick={this.onLogout}>Log-out</button>
+    <button className="button is-primary is-fullwidth" onClick={this.onLogout}>Log-out</button>
     
   </nav>
       

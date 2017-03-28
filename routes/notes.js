@@ -132,6 +132,25 @@ router.post('/delcheck', function(req, res, next){
   })
 });
 
+router.post('/delall', function(req, res, next){
+  console.log(req.body.user)
+  Note.remove({user: req.body.user}, function(err){
+    if(err){
+      console.log(err);
+    }else{
+      console.log("deleted");
+    }
+  })
+  Note.find({user: req.body.user}, function (err, remaining){
+    if(!err){
+      return res.json({
+        success: true,
+        response: remaining
+      })
+    }
+  })
+});
+
 
 
 module.exports = router;
