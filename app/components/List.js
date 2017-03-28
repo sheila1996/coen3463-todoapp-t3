@@ -17,6 +17,7 @@ class List extends Component {
       todelete: "",
       user: "",
       name: "",
+      count: [],
       username: "",
       newname: "",
       error: "",
@@ -29,6 +30,7 @@ class List extends Component {
     this.onUpdate = this.onUpdate.bind(this);
     this.onDelCheck = this.onDelCheck.bind(this);
     this.onDelAll = this.onDelAll.bind(this);
+
   }
 
 
@@ -85,7 +87,8 @@ onAdd(e){
                       }
                   notesApi.onGetNote(mute).then((res)=>{
                     this.setState({
-                      loopnotes: res.data.response
+                      loopnotes: res.data.response,
+
                     })
                   })
 
@@ -135,7 +138,7 @@ onAdd(e){
     notesApi.onUpdateComplete(white).then((res)=>{
       console.log(res);
       this.setState({
-        loopnotes: res.data.response
+        loopnotes: res.data.response,
       })
     })
   }
@@ -172,9 +175,11 @@ onAdd(e){
   render() {
 
     let displayComponents = [];
+    let displayCount = [];
     for(var index = 0; index < this.state.loopnotes.length; index++) {
       
          if(this.state.loopnotes[index].isCompleted == true){
+          displayCount.push({index})
           displayComponents.push(
           <label className="panel-block completednote">
           <input type="checkbox" onClick={this.onUpdate.bind(this, index)}  checked={this.state.loopnotes[index].isCompleted}/>
@@ -203,6 +208,7 @@ onAdd(e){
 
       <p className="panel-heading">
         To Do List
+        <label className="is-pulled-right">{displayCount.length}/{this.state.loopnotes.length}</label>
       </p>
       <form onSubmit={this.onAdd}>
     <div className="panel-block">
